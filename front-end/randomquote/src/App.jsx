@@ -5,19 +5,20 @@ class App extends React.Component {
       this.state = {
         loading:true,
         tweets:[],
-        random:1
+        random:1,
+        randomColor:0,
+        colors:['blue','lightBlue','grey','lighGrey','coral','aqua']
         }
         this.newQuote = this.newQuote.bind(this);
       }
    
+    
      componentDidMount() {
         this.setState({loading: true})
+        this.setState({randomColor:[Math.floor(Math.random() * this.state.colors.length)]})
         fetch("https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json")
             .then(response => response.json())
             .then(data => {
-                console.log(data.quotes)
-                console.log(data.quotes.length)
-                console.log ([Math.floor(Math.random() * data.quotes.length)])
                 this.setState({
                     random: [Math.floor(Math.random() * data.quotes.length)],
                     loading: false,
@@ -27,7 +28,8 @@ class App extends React.Component {
       }
 
       newQuote() {
-        this.setState({loading: true})
+        this.setState({loading: true}),
+        this.setState({randomColor:[Math.floor(Math.random() * this.state.colors.length)]})
         fetch("https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json")
             .then(response => response.json())
             .then(data => {
@@ -38,9 +40,16 @@ class App extends React.Component {
                 })
          })
       }
+
       render () { 
+        const mainStyle={
+          backgroundColor: this.state.colors[this.state.randomColor],
+          height: '100%',
+          textAlign:'center',
+          alignContent:'center'
+        };
         return (
-          <div>
+          <div style={mainStyle}>
             {this.state.loading ? <h1>Page Loading...</h1> :
             <div id="quote-box">
               <div id="text">
@@ -48,7 +57,7 @@ class App extends React.Component {
                     <h1>{this.state.tweet[this.state.random].quote}</h1>
                 </div>
                 <div id="author">
-                  <h4>{this.state.tweet[this.state.random].author}</h4>
+                  <h3>{this.state.tweet[this.state.random].author}</h3>
                  </div>
                 <div id="new-quote">
                   <button onClick={this.newQuote}>New quote</button>
