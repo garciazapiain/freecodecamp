@@ -3,8 +3,8 @@ console.log('It works');
 const handlePlusClick = () => {
     onclick=document.getElementById('Q').style.backgroundColor = "red"
     setTimeout(change,2000)
-    audio='https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3'
-    audio.play()
+    // audio='https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3'
+    // audio.play()
 };
 
 const change = () => {
